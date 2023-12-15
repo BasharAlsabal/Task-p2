@@ -1,0 +1,232 @@
+package kz.aitu.oop.practice.practice2;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class P2 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<Ticket> tickets = new ArrayList<>();
+
+        System.out.print("Enter the number of tickets to create: ");
+        int numOfTickets = scanner.nextInt();
+        scanner.nextLine(); // Consume newline left after nextInt()
+
+        for (int i = 0; i < numOfTickets; i++) {
+            System.out.print("Enter passenger name for ticket " + (i + 1) + ": ");
+            String passengerName = scanner.nextLine();
+
+            System.out.print("Enter passenger age for ticket " + (i + 1) + ": ");
+            int passengerAge = scanner.nextInt();
+            scanner.nextLine(); // Consume newline left after nextInt()
+
+            Passenger passenger = new Passenger(passengerName, passengerAge);
+
+            System.out.print("Enter seat number for ticket " + (i + 1) + ": ");
+            String seatNumber = scanner.nextLine();
+
+            System.out.print("Enter destination for ticket " + (i + 1) + ": ");
+            String destination = scanner.nextLine();
+
+            Ticket ticket = new Ticket(passenger, seatNumber, destination);
+
+            System.out.print("Confirm ticket for passenger " + passengerName + " (yes/no): ");
+            String confirmChoice = scanner.nextLine();
+            if (confirmChoice.equalsIgnoreCase("yes")) {
+                ticket.confirmTicket();
+            } else {
+                ticket.cancelTicket();
+            }
+
+            tickets.add(ticket);
+        }
+
+        // Display details of all tickets created
+        for (Ticket ticket : tickets) {
+            ticket.displayTicketDetails();
+        }
+    }
+}
+
+package kz.aitu.oop.practice.practice2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Train {
+    private List<Car> cars;
+    private Locomotive locomotive;
+
+    public Train(Locomotive locomotive) {
+        this.locomotive = locomotive;
+        this.cars = new ArrayList<>();
+    }
+
+    public void addCar(Car car) {
+        cars.add(car);
+    }
+
+    public int getTotalCarryingCapacity() {
+        int totalCapacity = locomotive.getCapacity();
+        for (Car car : cars) {
+            totalCapacity += car.getCapacity();
+        }
+        return totalCapacity;
+    }
+}
+
+package kz.aitu.oop.practice.practice2;
+
+public class Car {
+    private int capacity;
+
+    public Car(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+}
+package kz.aitu.oop.practice.practice2;
+
+public class Locomotive {
+    private int capacity;
+
+    public Locomotive(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+}
+package kz.aitu.oop.practice.practice2;
+
+public class Passenger {
+    private String name;
+    private int age;
+
+    public Passenger(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+package kz.aitu.oop.practice.practice2;
+
+public class Cargo {
+    private String description;
+    private double weight;
+
+    public Cargo(String description, double weight) {
+        this.description = description;
+        this.weight = weight;
+    }
+
+    // Getters and setters for description and weight
+}
+package kz.aitu.oop.practice.practice2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TrainStation {
+    private String name;
+    private List<Train> trains;
+
+    public TrainStation(String name) {
+        this.name = name;
+        this.trains = new ArrayList<>();
+    }
+
+    public void addTrain(Train train) {
+        trains.add(train);
+    }
+
+    // Other methods for managing trains at the station
+}
+package kz.aitu.oop.practice.practice2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Route {
+    private List<String> stops;
+
+    public Route() {
+        this.stops = new ArrayList<>();
+    }
+
+    public void addStop(String stop) {
+        stops.add(stop);
+    }
+
+    public List<String> getStops() {
+        return stops;
+    }
+
+    // Other methods for route management
+}
+package kz.aitu.oop.practice.practice2;
+
+public class Ticket {
+    private Passenger passenger;
+    private String seatNumber;
+    private String destination;
+    private boolean isConfirmed;
+
+    public Ticket(Passenger passenger, String seatNumber, String destination) {
+        this.passenger = passenger;
+        this.seatNumber = seatNumber;
+        this.destination = destination;
+        this.isConfirmed = false; // Initially, the ticket might not be confirmed
+    }
+
+    // Getters and setters for ticket details
+
+    public void confirmTicket() {
+        isConfirmed = true;
+        System.out.println("Ticket confirmed for passenger: " + passenger.getName());
+    }
+
+    public void cancelTicket() {
+        isConfirmed = false;
+        System.out.println("Ticket canceled for passenger: " + passenger.getName());
+    }
+
+    public void displayTicketDetails() {
+        System.out.println("Ticket Details:");
+        System.out.println("Passenger: " + passenger.getName());
+        System.out.println("Seat Number: " + seatNumber);
+        System.out.println("Destination: " + destination);
+        System.out.println("Confirmed: " + (isConfirmed ? "Yes" : "No"));
+    }
+}
+package kz.aitu.oop.practice.practice2;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseManager {
+    private Connection connection;
+
+    public DatabaseManager(String url, String username, String password) {
+        try {
+            this.connection = DriverManager.getConnection(url, username, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Methods for CRUD operations with the database
+}
